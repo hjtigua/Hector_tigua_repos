@@ -5,6 +5,8 @@ import { RepositoryMetricsEntity } from 'src/domain/repository/repository-metric
 import { Repository } from 'typeorm';
 import { RepositoryModel } from '../model/repository.model';
 import { TribeModel } from '../../tribe/model/tribe.model';
+import { RepositoryVerificationEntity } from 'src/domain/repository/repository-verification';
+import * as fs from 'fs';
 
 @Injectable()
 export class RepoPgRepository implements RepoRepository {
@@ -14,6 +16,17 @@ export class RepoPgRepository implements RepoRepository {
     @InjectRepository(TribeModel)
     private readonly tribeRepository: Repository<TribeModel>,
   ) {}
+
+  getRepositoryVerification(): Promise<RepositoryVerificationEntity> {
+    return new Promise((resolve) => {
+      const file = fs.readFileSync(
+        'src/infrastructure/repository/repo/repositories.mock.json',
+        'utf8',
+      );
+      const repositories = JSON.parse(file);
+      resolve(repositories);
+    });
+  }
 
   async getMetricsByTribe(tribeID: string): Promise<any> {
     await this.checkTribeOrFail(tribeID);

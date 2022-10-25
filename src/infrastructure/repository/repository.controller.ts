@@ -1,4 +1,5 @@
 import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common';
+import { RepositoryVerificationEntity } from 'src/domain/repository/repository-verification';
 import { RepositoryUseCase } from '../../application/repositoryUseCase';
 
 @Controller('repository')
@@ -11,5 +12,10 @@ export class RepositoryController {
       tribeID,
     );
     return repositoryInfo;
+  }
+
+  @Get('/verificationRepositories')
+  async getVerificationRepositories(): Promise<RepositoryVerificationEntity> {
+    return await this.repositoryUseCase.getRepositoryVerification();
   }
 }
