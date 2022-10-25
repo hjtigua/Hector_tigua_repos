@@ -1,8 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
-@Entity()
+@Entity('organization')
 export class OrganizationModel {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn('uuid')
   id_organization: string;
 
   @Column('varchar', { length: 50, nullable: false })
