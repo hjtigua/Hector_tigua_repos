@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateOrganizationDto } from 'src/domain/organization/create-organization.dto';
 import { OrganizationEntity } from 'src/domain/organization/organization.entity';
 import { OrganizationRepository } from 'src/domain/organization/organization.repository';
+import { UpdateOrganizationDto } from 'src/domain/organization/update-organization.dto';
 import { Repository } from 'typeorm';
 import { OrganizationModel } from '../model/organization.model';
 
@@ -14,7 +15,7 @@ export class OrganizationPgRepository implements OrganizationRepository {
   ) {}
 
   async create(
-    organizationDto: OrganizationEntity,
+    organizationDto: CreateOrganizationDto,
   ): Promise<OrganizationEntity> {
     const newOrganization = this.organizationRepository.create(organizationDto);
     const createdOrganization = await this.organizationRepository.save(
@@ -27,13 +28,31 @@ export class OrganizationPgRepository implements OrganizationRepository {
     };
     return organizationEntity;
   }
-  update(organization: OrganizationEntity): Promise<OrganizationEntity> {
-    throw new Error('Method not implemented.');
+
+  async update(
+    id: string,
+    organizationDto: UpdateOrganizationDto,
+  ): Promise<OrganizationEntity> {
+    const toUpdateOrganization = await this.organizationRepository.preload({
+      id_organization: id,
+      ...organizationDto,
+    });
+    if (!toUpdateOrganization)
+      throw new NotFoundException(`Organization with ID "${id}" not found`);
+    return await this.organizationRepository.save(toUpdateOrganization);
   }
+
   delete(id: number): Promise<OrganizationEntity> {
     throw new Error('Method not implemented.');
   }
   getAll(): Promise<OrganizationEntity[]> {
     throw new Error('Method not implemented.');
+  }
+  private async findOne(id: string): Promise<OrganizationModel> {
+    const organization: OrganizationModel =
+      await this.organizationRepository.findOne({
+        where: { id_organization: id },
+      });
+    return organization;
   }
 }

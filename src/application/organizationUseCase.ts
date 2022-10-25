@@ -3,6 +3,7 @@ import { CreateOrganizationDto } from 'src/domain/organization/create-organizati
 import { OrganizationEntity } from 'src/domain/organization/organization.entity';
 import { OrganizationRepository } from 'src/domain/organization/organization.repository';
 import { OrganizationValue } from 'src/domain/organization/organization.value';
+import { UpdateOrganizationDto } from 'src/domain/organization/update-organization.dto';
 
 @Injectable()
 export class OrganizationUseCase {
@@ -17,9 +18,12 @@ export class OrganizationUseCase {
     return await this.organizationRepository.create(organizationValue);
   }
 
-  //   async updateOrganization(organization: OrganizationEntity): Promise<OrganizationEntity> {
-  //     return await this.organizationRepository.update(organization);
-  //   }
+  async updateOrganization(
+    id: string,
+    organization: UpdateOrganizationDto,
+  ): Promise<OrganizationEntity> {
+    return await this.organizationRepository.update(id, organization);
+  }
 
   //   async deleteOrganization(id: number): Promise<OrganizationEntity> {
   //     return await this.organizationRepository.delete(id);
