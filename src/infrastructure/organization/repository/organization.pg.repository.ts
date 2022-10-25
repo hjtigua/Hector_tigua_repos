@@ -42,10 +42,11 @@ export class OrganizationPgRepository implements OrganizationRepository {
     return await this.organizationRepository.save(toUpdateOrganization);
   }
 
-  delete(id: number): Promise<OrganizationEntity> {
-    throw new Error('Method not implemented.');
-  }
   getAll(): Promise<OrganizationEntity[]> {
+    return this.organizationRepository.find();
+  }
+
+  delete(id: number): Promise<OrganizationEntity> {
     throw new Error('Method not implemented.');
   }
   private async findOne(id: string): Promise<OrganizationModel> {

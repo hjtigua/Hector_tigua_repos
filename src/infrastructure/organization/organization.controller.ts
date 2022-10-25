@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { OrganizationUseCase } from 'src/application/organizationUseCase';
 import { CreateOrganizationDto } from 'src/domain/organization/create-organization.dto';
 import { OrganizationEntity } from '../../domain/organization/organization.entity';
@@ -21,5 +21,13 @@ export class OrganizationController {
     @Body() createPokemonDto: UpdateOrganizationDto,
   ): Promise<OrganizationEntity> {
     return this.organizationUseCase.updateOrganization(id, createPokemonDto);
+  }
+
+  @Get()
+  async getAll() {
+    const organizations = await this.organizationUseCase.getAllOrganizations();
+    return {
+      organizations: organizations,
+    };
   }
 }

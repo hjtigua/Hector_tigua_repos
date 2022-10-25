@@ -25,11 +25,11 @@ export class OrganizationUseCase {
     return await this.organizationRepository.update(id, organization);
   }
 
+  async getAllOrganizations(): Promise<OrganizationEntity[]> {
+    return await this.organizationRepository.getAll();
+  }
+
   //   async deleteOrganization(id: number): Promise<OrganizationEntity> {
   //     return await this.organizationRepository.delete(id);
-  //   }
-
-  //   async getAllOrganizations(): Promise<OrganizationEntity[]> {
-  //     return await this.organizationRepository.getAll();
   //   }
 }
