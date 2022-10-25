@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrganizationModule } from './infrastructure/organization/organization.module';
+import { RepositoryModule } from './infrastructure/repository/repository.module';
+import { TribeModule } from './infrastructure/tribe/tribe.module';
+import { MetricsModule } from './infrastructure/metrics/metrics.module';
 /*
  TypeOrmModule.forRoot({
        type: 'cockroachdb',
@@ -33,6 +36,9 @@ import { OrganizationModule } from './infrastructure/organization/organization.m
       autoLoadEntities: true,
     }),
     OrganizationModule,
+    RepositoryModule,
+    TribeModule,
+    MetricsModule,
   ],
   controllers: [],
   providers: [],
