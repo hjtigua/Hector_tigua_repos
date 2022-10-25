@@ -1,8 +1,15 @@
+import { Injectable } from '@nestjs/common';
+import { CreateOrganizationDto } from './create-organization.dto';
 import { OrganizationEntity } from './organization.entity';
 
-export interface OrganizationRepository {
-  create(organization: OrganizationEntity): Promise<OrganizationEntity>;
-  update(organization: OrganizationEntity): Promise<OrganizationEntity>;
-  delete(id: number): Promise<OrganizationEntity>;
-  getAll(): Promise<OrganizationEntity[]>;
+@Injectable()
+export abstract class OrganizationRepository {
+  abstract create(
+    organization: CreateOrganizationDto,
+  ): Promise<OrganizationEntity>;
+  abstract update(
+    organization: OrganizationEntity,
+  ): Promise<OrganizationEntity>;
+  abstract delete(id: number): Promise<OrganizationEntity>;
+  abstract getAll(): Promise<OrganizationEntity[]>;
 }

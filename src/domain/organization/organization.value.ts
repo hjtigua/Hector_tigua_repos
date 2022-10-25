@@ -4,10 +4,10 @@ import { OrganizationEntity } from './organization.entity';
 export class OrganizationValue implements OrganizationEntity {
   name: string;
   status: number;
-  uuid: string;
+  id_organization: string;
 
   constructor({ name, status }: { name: string; status: number }) {
-    this.uuid = uuid();
+    this.id_organization = uuid();
     this.name = name;
     this.status = status;
   }

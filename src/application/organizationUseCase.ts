@@ -1,8 +1,10 @@
+import { Injectable } from '@nestjs/common';
 import { CreateOrganizationDto } from 'src/domain/organization/create-organization.dto';
 import { OrganizationEntity } from 'src/domain/organization/organization.entity';
 import { OrganizationRepository } from 'src/domain/organization/organization.repository';
 import { OrganizationValue } from 'src/domain/organization/organization.value';
 
+@Injectable()
 export class OrganizationUseCase {
   constructor(
     private readonly organizationRepository: OrganizationRepository,
