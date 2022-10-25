@@ -14,7 +14,7 @@ export abstract class OrganizationRepository {
     organization: UpdateOrganizationDto,
   ): Promise<OrganizationEntity>;
 
-  abstract delete(id: number): Promise<OrganizationEntity>;
+  abstract delete(id: string): Promise<OrganizationEntity>;
 
   abstract getAll(): Promise<OrganizationEntity[]>;
 }

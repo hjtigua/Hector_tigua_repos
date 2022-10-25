@@ -46,14 +46,18 @@ export class OrganizationPgRepository implements OrganizationRepository {
     return this.organizationRepository.find();
   }
 
-  delete(id: number): Promise<OrganizationEntity> {
-    throw new Error('Method not implemented.');
+  async delete(id: string): Promise<OrganizationEntity> {
+    const organizationToDelete = await this.findOne(id);
+    return await this.organizationRepository.remove(organizationToDelete);
   }
+
   private async findOne(id: string): Promise<OrganizationModel> {
     const organization: OrganizationModel =
       await this.organizationRepository.findOne({
         where: { id_organization: id },
       });
+    if (!organization)
+      throw new NotFoundException(`Organization with ID "${id}" not found`);
     return organization;
   }
 }

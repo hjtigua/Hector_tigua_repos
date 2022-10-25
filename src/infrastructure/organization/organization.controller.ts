@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { OrganizationUseCase } from 'src/application/organizationUseCase';
 import { CreateOrganizationDto } from 'src/domain/organization/create-organization.dto';
 import { OrganizationEntity } from '../../domain/organization/organization.entity';
@@ -17,7 +26,7 @@ export class OrganizationController {
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() createPokemonDto: UpdateOrganizationDto,
   ): Promise<OrganizationEntity> {
     return this.organizationUseCase.updateOrganization(id, createPokemonDto);
@@ -28,6 +37,14 @@ export class OrganizationController {
     const organizations = await this.organizationUseCase.getAllOrganizations();
     return {
       organizations: organizations,
+    };
+  }
+
+  @Delete(':id')
+  async delete(@Param('id', ParseUUIDPipe) id: string) {
+    await this.organizationUseCase.deleteOrganization(id);
+    return {
+      message: 'Organization deleted',
     };
   }
 }
