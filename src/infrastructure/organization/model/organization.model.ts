@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { TribeModel } from 'src/infrastructure/tribe/model/tribe.model';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity('organization')
 export class OrganizationModel {
@@ -10,4 +11,8 @@ export class OrganizationModel {
 
   @Column('int4', { nullable: false })
   status: number;
+
+  /*Relations*/
+  @OneToMany(() => TribeModel, (tribe) => tribe.organization)
+  tribes: TribeModel[];
 }
