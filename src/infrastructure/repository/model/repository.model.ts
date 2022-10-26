@@ -20,8 +20,8 @@ export class RepositoryModel {
   @Column('varchar', { length: 1, nullable: false })
   state: string;
 
-  @Column('timestamp', { default: new Date().getTime(), nullable: false })
-  create_time: string;
+  @Column('timestamp', { default: () => 'CURRENT_TIMESTAMP', nullable: false })
+  create_time: Date;
 
   @Column('varchar', { nullable: false })
   status: string;

@@ -18,7 +18,7 @@ export class TribeModel {
   name: string;
 
   @Column('int4', { nullable: false })
-  status: string;
+  status: number;
 
   /*Relations*/
   @OneToMany(() => RepositoryModel, (repository) => repository.tribe)

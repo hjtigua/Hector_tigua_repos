@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { OrganizationController } from './organization.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrganizationModel } from './model/organization.model';
@@ -16,5 +16,6 @@ import { OrganizationPgRepository } from './repository/organization.pg.repositor
       useClass: OrganizationPgRepository,
     },
   ],
+  exports: [OrganizationModule, TypeOrmModule],
 })
 export class OrganizationModule {}

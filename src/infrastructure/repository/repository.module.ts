@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RepositoryUseCase } from 'src/application/repositoryUseCase';
 import { RepoRepository } from 'src/domain/repository/repo-repository';
@@ -17,5 +17,6 @@ import { RepositoryController } from './repository.controller';
       useClass: RepoPgRepository,
     },
   ],
+  exports: [RepositoryModule],
 })
 export class RepositoryModule {}
