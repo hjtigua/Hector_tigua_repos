@@ -11,11 +11,17 @@ export class RepositoryController {
     const repositoryInfo = await this.repositoryUseCase.getMetricsByTribe(
       tribeID,
     );
-    return repositoryInfo;
+    return {
+      repositories: repositoryInfo,
+    };
   }
 
   @Get('/verificationRepositories')
-  async getVerificationRepositories(): Promise<RepositoryVerificationEntity> {
-    return await this.repositoryUseCase.getRepositoryVerification();
+  async getVerificationRepositories() {
+    const repositories =
+      await this.repositoryUseCase.getRepositoryVerification();
+    return {
+      repositories: repositories,
+    };
   }
 }

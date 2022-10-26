@@ -8,6 +8,18 @@ import { TribeModel } from '../../tribe/model/tribe.model';
 import { RepositoryVerificationEntity } from 'src/domain/repository/repository-verification';
 import * as fs from 'fs';
 
+const repositoryStatus = {
+  604: 'Verificado',
+  605: 'En espera',
+  606: 'Aprobado',
+};
+
+const repositoryState = {
+  E: 'Habilitado',
+  D: 'Desabilitado',
+  A: 'Archivado',
+};
+
 @Injectable()
 export class RepoPgRepository implements RepoRepository {
   constructor(
@@ -17,13 +29,13 @@ export class RepoPgRepository implements RepoRepository {
     private readonly tribeRepository: Repository<TribeModel>,
   ) {}
 
-  getRepositoryVerification(): Promise<RepositoryVerificationEntity> {
+  getRepositoryVerification(): Promise<RepositoryVerificationEntity[]> {
     return new Promise((resolve) => {
       const file = fs.readFileSync(
         'src/infrastructure/repository/repo/repositories.mock.json',
         'utf8',
       );
-      const repositories = JSON.parse(file);
+      const repositories: RepositoryVerificationEntity[] = JSON.parse(file);
       resolve(repositories);
     });
   }
@@ -35,7 +47,13 @@ export class RepoPgRepository implements RepoRepository {
       throw new BadRequestException(
         'La Tribu no tiene repositorios que cumplan con la cobertura necesaria',
       );
-    return repositoryInfo;
+
+    const repositoriesValidation = await this.getRepositoryVerification();
+    const results = this.MapRepositories(
+      repositoriesValidation,
+      repositoryInfo,
+    );
+    return results;
   }
 
   private async checkTribeOrFail(tribeID: string): Promise<void> {
@@ -44,7 +62,9 @@ export class RepoPgRepository implements RepoRepository {
       throw new BadRequestException('La Tribu no se encuentra registrada');
   }
 
-  private async getMetricsByTribeQuery(tribeID: string): Promise<any[]> {
+  private async getMetricsByTribeQuery(
+    tribeID: string,
+  ): Promise<RepositoryMetricsEntity[]> {
     const builder = this.repoRepository.createQueryBuilder('repository');
     const result = await builder
       .leftJoin('repository.tribe', 'tribe')
@@ -68,7 +88,35 @@ export class RepoPgRepository implements RepoRepository {
       .andWhere("DATE_PART('YEAR', repository.create_time) = :year", {
         year: new Date().getFullYear(),
       })
-      .getRawMany();
+      .getRawMany<RepositoryMetricsEntity>();
     return result;
+  }
+
+  private RepositoriesVerificationToMap(
+    repositoriesValidation: RepositoryVerificationEntity[],
+  ): Map<string, RepositoryVerificationEntity> {
+    const map = new Map<string, RepositoryVerificationEntity>();
+    repositoriesValidation.forEach((repository) => {
+      map.set(repository.id, repository);
+    });
+    return map;
+  }
+
+  private MapRepositories(
+    repositoriesValidation: RepositoryVerificationEntity[],
+    repositoryMetrics: RepositoryMetricsEntity[],
+  ) {
+    const repositoriesMap = this.RepositoriesVerificationToMap(
+      repositoriesValidation,
+    );
+    const results = repositoryMetrics.map((repository) => {
+      const repositoryValidation = repositoriesMap.get(repository.id);
+      repository.verificationState =
+        repositoryStatus[repositoryValidation.state];
+      repository.state = repositoryState[repository.state];
+      repository.coverage = `${repository.coverage}%`;
+      return repository;
+    });
+    return results;
   }
 }

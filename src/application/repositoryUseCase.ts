@@ -11,7 +11,7 @@ export class RepositoryUseCase {
     return await this.repoRepository.getMetricsByTribe(tribeID);
   }
 
-  async getRepositoryVerification(): Promise<RepositoryVerificationEntity> {
+  async getRepositoryVerification(): Promise<RepositoryVerificationEntity[]> {
     return await this.repoRepository.getRepositoryVerification();
   }
 }
