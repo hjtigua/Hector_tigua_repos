@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "51ecf37d-5187-484a-84d0-1241a01adbeb",
+		"name": "DeUnaEndPoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1842298"
+	},
+	"item": [
+		{
+			"name": "CREATE ORGANIZATION",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Banco Machala\",\r\n    \"status\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/organization",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"organization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Organizacion",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Banco pichincha de una\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/organization/dbac0676-62be-434b-9d1d-19d27decd1e7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"organization",
+						"dbac0676-62be-434b-9d1d-19d27decd1e7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Organizacion",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/organization/ff7c1471-ad69-4abe-a356-3740a6dbe7fa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"organization",
+						"ff7c1471-ad69-4abe-a356-3740a6dbe7fa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetALL Organizations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/organization",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"organization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetRepositoriesVerification",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/repository/verificationRepositories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"repository",
+						"verificationRepositories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMetricsByTribe",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/repository/tribe/78d1d3af-f8e8-49a4-8084-f7f8ec9b31ac",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"repository",
+						"tribe",
+						"78d1d3af-f8e8-49a4-8084-f7f8ec9b31ac"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCSVFile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/repository/getCSV/78d1d3af-f8e8-49a4-8084-f7f8ec9b31ac",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"repository",
+						"getCSV",
+						"78d1d3af-f8e8-49a4-8084-f7f8ec9b31ac"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
