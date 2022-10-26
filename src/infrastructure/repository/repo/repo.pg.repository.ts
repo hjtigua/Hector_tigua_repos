@@ -1,3 +1,5 @@
+import { Parser } from 'json2csv';
+
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RepoRepository } from 'src/domain/repository/repo-repository';
@@ -54,6 +56,13 @@ export class RepoPgRepository implements RepoRepository {
       repositoryInfo,
     );
     return results;
+  }
+
+  async getCSVFile(tribeID: string): Promise<string> {
+    const repositories = await this.getMetricsByTribe(tribeID);
+    const parser = new Parser({ fields: Object.keys(repositories[0]) });
+    const csv = parser.parse(repositories);
+    return csv;
   }
 
   private async checkTribeOrFail(tribeID: string): Promise<void> {

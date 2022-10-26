@@ -14,4 +14,8 @@ export class RepositoryUseCase {
   async getRepositoryVerification(): Promise<RepositoryVerificationEntity[]> {
     return await this.repoRepository.getRepositoryVerification();
   }
+
+  getCSVFile(tribeID: string): Promise<string> {
+    return this.repoRepository.getCSVFile(tribeID);
+  }
 }

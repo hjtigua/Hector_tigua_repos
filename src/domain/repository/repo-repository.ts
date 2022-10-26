@@ -6,4 +6,5 @@ import { RepositoryVerificationEntity } from './repository-verification';
 export abstract class RepoRepository {
   abstract getMetricsByTribe(tribeID: string): Promise<RepositoryMetricsEntity>;
   abstract getRepositoryVerification(): Promise<RepositoryVerificationEntity[]>;
+  abstract getCSVFile(tribeID: string): Promise<any>;
 }
